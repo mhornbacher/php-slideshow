@@ -5,13 +5,13 @@
     }
 
     $img_ext = 'jpg';
-    $audio_ext = 'm4a'; // remember to change line 75 if you change this
+    $audio_ext = 'mp3'; // remember to change line 75 if you change this
 
     $next_page = $page + 1;
     $previous_page = $page - 1;
 
-    $next_page_exists = file_exists("./audio/$next_page.$audio_ext") && file_exists("./img/$next_page.$img_ext");
-    $previous_page_exists = file_exists("./audio/$previous_page.$audio_ext") && file_exists("./img/$next_page.$img_ext");
+    $next_page_exists = file_exists("./img/$next_page.$img_ext");
+    $previous_page_exists = file_exists("./img/$previous_page.$img_ext");
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,6 +53,7 @@
         audio {
             width: 100%;
             margin-top: 20px;
+            min-width: 300px;
         }
         </style>
     </head>
@@ -71,10 +72,12 @@
         </header>
         <section>
             <img src="./img/<?php echo $page; ?>.<?php echo $img_ext; ?>" />
-            <audio autoplay controls>
-                <!-- Change the Audio type here if you change it on line 8 -->
-                <source src="./audio/<?php echo $page; ?>.<?php echo $audio_ext; ?>" type="audio/mpeg">
-            </audio>
+            <?php if (file_exists("./audio/$page.$audio_ext")) { ?>
+                <audio autoplay controls>
+                    <!-- Change the Audio type here if you change it on line 8 -->
+                    <source src="./audio/<?php echo $page; ?>.<?php echo $audio_ext; ?>" type="audio/mpeg">
+                </audio>
+            <?php } ?>
         </section>
     </body>
 </html>
